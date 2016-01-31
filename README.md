@@ -32,7 +32,7 @@ Do not use this component (yet), it's main purpose is to experiment with lazy re
 
 ```bash
 git clone https://github.com/bogdanpetru/react-lazylist.git
-cd react-transform-boilerplate
+cd react-lazylist
 npm install
 npm start
 open http://localhost:3000

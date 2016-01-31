@@ -1,5 +1,5 @@
 {
-  "name": "react-lazyList",
+  "name": "react-lazylist",
   "version": "1.0.0",
   "description": "A list that renders only visible children.",
   "scripts": {
