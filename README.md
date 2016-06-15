@@ -19,13 +19,53 @@ A list that be performant with 10^6 lines rendered, flexible line height, easy c
 
 ## Props
 
+### Basics
+
+**key**
+> key: String
+
+Select what attribute to be used as key. It defaults to `id`, if no `id` attribute on data, it will use render `index`.
+Other options are:
+- `bufferIndex`, this is from 0 - `bufferSize`. In this case visible elements are reused and only it's content's are changed.
+- `renderIndex`, this can be from 0 to length of array. It is it's index in the array. In this case elements that are not out of view are re-used.
+- `custom attribute`, set a custom attribute as key, it should be unique.
 
 
+**data**
+> data: Array/Promise(Array)
+
+It is an array or a promise that returns an array of objects containing data to be rendered.
+
+**onScroll**
+> onScroll: (scrollTop: Number) => void
+
+Called onScroll.
+
+**enableArrowNavigation**
+> enableArrowNavigation?: Booleon
+
+Weather to navigate list using arrows. Active element will have `.react-lazylist__item--active` class.
+Defaults is `false`.
+
+### Presentation
+
+### Methods
+**setScrollTop**
+> setScrollTop(scrollTop: Number): void
+
+Change `scrollTop`. When this is called, it will trigger `onScroll`.
+
+## CSS ClassNames index
+`react-lazylist`
+
+`react-lazylist--isNavigationEnabled`
+
+`react-lazylist--isControlled` - when `scrollTop` is controlled thru props.
 
 ## Usage
 
 ```js
-  const rows = [
+  const data = [
     {
       name: 'hello', lastName: 'world'
     }, {
@@ -33,15 +73,16 @@ A list that be performant with 10^6 lines rendered, flexible line height, easy c
     },
     ..
   ]
-  const renderRow = (row, rows, realIndex, props) => {
-    return <div>{row.name}</div>
-  }
+
+  const renderItem = ({ name }) => <div>{name}</div>
+  const getItemHeight = ( dataItem ) => 20 
 
   <LazyList
-    rows={rows}
+    data={data}
     height={400}
-    rowHeight={50}
-    renderRow={renderRow}
+    minItemHeight={50}
+    getItemHeight={getItemHeight}
+    renderItem={renderItem}
   />
 ```
 
