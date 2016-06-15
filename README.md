@@ -1,13 +1,30 @@
 # React Lazy List
 
-Lazy render only rows that are visible.
+Awesome react list, lazy renders only the visible rows.
+The component is not production ready, working on documentation.
 
-Do not use this component (yet), it's main purpose is to experiment with lazy render on large datasets.
+## Goal
+A list that be performant with 10^6 lines rendered, flexible line height, easy customizable (themes and render hooks). Supports `tabs` as iPhone contact list.
+
+## TODO:
+- [ ] write api documentation and examples before any code
+- [ ] render only visible rows, with option to control buffer size
+- [ ] create a theming schema
+- [ ] complete documentation
+- [ ] everything is customisable, and has a prop hook
+- [ ] horizontal list
+- [ ] support for infinite scroll (skip/limit), and pagination?
+- [ ] use flow
+- [ ] test coverage
+
+## Props
+
+
 
 
 ## Usage
 
-```
+```js
   const rows = [
     {
       name: 'hello', lastName: 'world'
@@ -20,7 +37,7 @@ Do not use this component (yet), it's main purpose is to experiment with lazy re
     return <div>{row.name}</div>
   }
 
-  <LazyList 
+  <LazyList
     rows={rows}
     height={400}
     rowHeight={50}
@@ -39,5 +56,4 @@ open http://localhost:3000
 ```
 
 ## License
-
 MIT
