@@ -10,8 +10,7 @@ A list that be performant with 10^6 lines rendered, flexible line height, easy c
 - [ ] write api documentation and examples before any code
 - [ ] render only visible rows, with option to control buffer size
 - [ ] create a theming schema
-- [ ] complete documentation
-- [ ] everything is customisable, and has a prop hook
+- [ ] everything is customisable, prop hooks
 - [ ] horizontal list
 - [ ] support for infinite scroll (skip/limit), and pagination?
 - [ ] use flow
