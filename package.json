@@ -1,6 +1,6 @@
 {
   "name": "react-lazylist",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A list that renders only visible children.",
   "scripts": {
     "clean": "rimraf dist",
