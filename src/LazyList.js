@@ -1,12 +1,35 @@
 import React, { Component, PropTypes } from 'react';
 import getRowsRangeToRender from './getRowsRangeToRender'
 
+
+class ListItem extends Compoent {
+  render() {
+    const {
+      rowHeight,
+      renderRow
+    } = props
+
+    const translateY = (realIndex * rowHeight) - ((index + 1) * rowHeight)
+
+    return <div key={key}
+      style={{
+        transform: `translateY(${translateY}px)`,
+        height: rowHeight
+      }}
+    >
+      {renderRow(row, rows, realIndex, props)}
+    </div>
+  }
+}
+
 class LazyList extends Component {
   render () {
-    const props = this.props
-    const {rows} = props
-    const {height} = props
-    const {rowHeight} = props
+    const {
+      rows,
+      height,
+      rowHeight
+    } = this.props
+
     const scrollBodyHeight = rows.length * rowHeight
 
     const style = {
@@ -25,9 +48,13 @@ class LazyList extends Component {
         }
 
     const scrollTop = this.getScrollTop()
-    const rowsRangeToRender = getRowsRangeToRender({
+
+    const {
+      from,
+      to
+    } = getRowsRangeToRender({
       height,
-      rowHeight, 
+      rowHeight,
       scrollTop
     })
 
@@ -35,39 +62,26 @@ class LazyList extends Component {
       ref="virtualScroller"
       // I know, I don't like this either
       // I think I will move the scrollTop to state, so it can be controlled.
-      onScroll={() => this.setState({})} 
+      onScroll={() => this.setState({})}
     >
       <div className="scrollBody"
         ref="scrollBody"
         style={scrollBodyStyle}
       >
-        {this.renderRows(rowsRangeToRender, rows, props)}
+        {
+          rows.slice(from, to)
+            .map((row, indwx) => {
+              // return this.renderRow(row, rows, index, from, props)
+              const realIndex = index + startIndex
+              const key = `row-item-${realIndex}`
+
+              return <ListItem key={key} />
+            })
+        }
       </div>
     </div>
   }
 
-  renderRows ({from, to}, rows, props) {
-    const rowsToRender = rows.slice(from, to)
-
-    return rowsToRender.map((row, index) => this.renderRow(row, rows, index, from, props))
-  }
-
-  renderRow (row, rows, index, startIndex, props) {
-    const realIndex = index + startIndex
-    const key = `row-item-${realIndex}`
-    const {rowHeight} = props
-    const translateY = (realIndex * rowHeight) - ((index + 1) * rowHeight)
-
-
-    return <div key={key}
-      style={{
-        transform: `translateY(${translateY}px)`,
-        height: rowHeight
-      }}
-    >
-      {props.renderRow(row, rows, realIndex, props)}
-    </div>
-  }
 
   getScrollTop () {
     if (this.refs.virtualScroller) {
