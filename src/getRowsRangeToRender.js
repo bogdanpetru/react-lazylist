@@ -1,6 +1,6 @@
 const getRowsRangeToRender = ({height, rowHeight, scrollTop, extraRows= 6}) => {
-  const noRowsToRender = height / rowHeight + extraRows
-  
+  const noRowsToRender = Math.ceil(height / rowHeight + extraRows)
+
   if (scrollTop <= (extraRows/2) * rowHeight) {
     // reder first n items
     return {
@@ -9,11 +9,10 @@ const getRowsRangeToRender = ({height, rowHeight, scrollTop, extraRows= 6}) => {
     }
   }
 
-  const renderFrom = scrollTop / rowHeight - (extraRows / 2)
-  const rowsToRender = {
-    from: ~~renderFrom,
-    to: ~~renderFrom + ~~noRowsToRender,
-  }
+  const renderFrom = Math.ceil(scrollTop / rowHeight - (extraRows / 2))
+  const to = from + noRowsToRender;
+
+  const rowsToRender = { from, to }
 
   return rowsToRender
 }
