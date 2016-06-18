@@ -70,12 +70,11 @@ class LazyList extends Component {
       >
         {
           rows.slice(from, to)
-            .map((row, indwx) => {
-              // return this.renderRow(row, rows, index, from, props)
+            .map((item, indwx) => {
               const realIndex = index + startIndex
               const key = `row-item-${realIndex}`
 
-              return <ListItem key={key} />
+              return <ListItem {...item} key={key} />
             })
         }
       </div>

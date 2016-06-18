@@ -35,15 +35,18 @@
     "babel-preset-react-hmre": "^1.0.0",
     "cross-env": "^1.0.6",
     "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-babel": "^3.0.0",
-    "eslint-plugin-react": "^3.11.3",
+    "eslint-plugin-import": "^1.8.1",
+    "eslint-plugin-jsx-a11y": "^1.5.3",
+    "eslint-plugin-react": "^3.16.1",
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.13.3",
+    "faker": "^3.0.1",
     "rimraf": "^2.4.3",
     "webpack": "^1.12.9",
     "webpack-dev-middleware": "^1.4.0",
-    "webpack-hot-middleware": "^2.6.0",
-    "faker": "^3.0.1"
+    "webpack-hot-middleware": "^2.6.0"
   },
   "dependencies": {
     "react": "^0.14.3",
