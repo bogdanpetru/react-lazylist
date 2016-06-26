@@ -1,6 +1,4 @@
-// @flow
-
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react'
 import ListItem from './ListItem'
 import getRowsRangeToRender from './getRowsRangeToRender'
 

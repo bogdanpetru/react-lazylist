@@ -1,4 +1,14 @@
-// @flow
+import React, { Component } from 'react'
+import { render } from 'react-dom'
+import LazyList from './src/LazyList'
 
-const str = "test flow"
-console.log(str)
+
+
+class App extends Component {
+  render() {
+    return <div> Hello world </div>
+  }
+}
+
+
+render(<App />, document.getElementById('app'))

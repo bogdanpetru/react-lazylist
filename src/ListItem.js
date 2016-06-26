@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class ListItem extends Compoent {
+class ListItem extends Component {
   render() {
     const {
       rowHeight,
