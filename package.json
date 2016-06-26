@@ -6,7 +6,6 @@
     "clean": "rimraf dist",
     "build:webpack": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
     "build": "npm run clean && npm run build:webpack",
-    "start": "node devServer.js",
     "lint": "eslint src",
   },
   "repository": {
@@ -27,10 +26,9 @@
   },
   "homepage": "https://github.com/bogdanpetru/react-lazylist",
   "devDependencies": {
-
+    "react-dom": "^0.14.3"
   },
   "dependencies": {
     "react": "^0.14.3",
-    "react-dom": "^0.14.3"
   }
 }
