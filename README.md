@@ -8,9 +8,10 @@ Awesome react list, lazy renders only the visible rows.
 A list that be performant with 10^6 lines rendered, flexible line height, easy customizable (themes and render hooks). Supports `tabs` as iPhone contact list.
 
 ## TODO MVP:
-- [ ] write mvp documentation
+- [x] write mvp documentation
+- [ ] implement documentation
 - [ ] write tests
-- [ ] use flow 
+- [ ] use flow
 - [ ] virtual render
 - [ ] basic theme
 
