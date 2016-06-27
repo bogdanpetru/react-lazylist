@@ -4,18 +4,23 @@ class ListItem extends Component {
   render() {
     const {
       rowHeight,
-      renderRow
-    } = props
+      renderRow,
+      realIndex,
+      index
+    } = this.props
 
     const translateY = (realIndex * rowHeight) - ((index + 1) * rowHeight)
 
-    return <div key={key}
+    return <div
       style={{
         transform: `translateY(${translateY}px)`,
         height: rowHeight
       }}
     >
-      {renderRow(row, rows, realIndex, props)}
+      {renderRow()}
     </div>
   }
 }
+
+
+export default ListItem

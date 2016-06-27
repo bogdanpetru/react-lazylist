@@ -5,12 +5,13 @@ import getRowsRangeToRender from './getRowsRangeToRender'
 class LazyList extends Component {
   render () {
     const {
-      rows,
+      items,
       height,
-      rowHeight
+      rowHeight,
+      renderRow
     } = this.props
 
-    const scrollBodyHeight = rows.length * rowHeight
+    const scrollBodyHeight = items.length * rowHeight
 
     const style = {
         height,
@@ -29,14 +30,16 @@ class LazyList extends Component {
 
     const scrollTop = this.getScrollTop()
 
-    const {
-      from,
-      to
-    } = getRowsRangeToRender({
-      height,
-      rowHeight,
-      scrollTop
-    })
+    // const {
+    //   from,
+    //   to
+    // } = getRowsRangeToRender({
+    //   height,
+    //   rowHeight,
+    //   scrollTop
+    // })
+
+    const startIndex = 0;
 
     return <div style={style}
       ref="virtualScroller"
@@ -49,12 +52,18 @@ class LazyList extends Component {
         style={scrollBodyStyle}
       >
         {
-          rows.slice(from, to)
-            .map((item, indwx) => {
-              const realIndex = index + startIndex
-              const key = `row-item-${realIndex}`
+          items
+            .map((item, index) => {
+              // const realIndex = index + startIndex
+              const key = `row-item-${index}`
 
-              return <ListItem {...item} key={key} />
+              return <ListItem
+                {...item}
+                key={key}
+                renderRow={renderRow}
+                index={index}
+                realIndex={index}
+              />
             })
         }
       </div>
@@ -72,7 +81,7 @@ class LazyList extends Component {
 }
 
 LazyList.propTypes = {
-  renderRows: PropTypes.func
+  renderRow: PropTypes.func
 }
 
 export default LazyList

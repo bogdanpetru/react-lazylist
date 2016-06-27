@@ -1,14 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { render } from 'react-dom'
-import LazyList from './src/LazyList'
+import DemoApp from './DemoApp'
 
 
-
-class App extends Component {
-  render() {
-    return <div> Hello world </div>
-  }
-}
-
-
-render(<App />, document.getElementById('app'))
+render(<DemoApp />, document.getElementById('app'))
