@@ -2,31 +2,17 @@ import React, { Component, PropTypes } from 'react'
 import ListItem from './ListItem'
 import getRowsRangeToRender from './getRowsRangeToRender'
 
+import prepareStyle from './prepareStyle'
+
 class LazyList extends Component {
   render () {
     const {
       items,
-      height,
-      rowHeight,
-      renderRow
+      renderRow,
+      bodyStyle,
+      style
     } = this.props
 
-    const scrollBodyHeight = items.length * rowHeight
-
-    const style = {
-        height,
-        overflowY: 'scroll',
-        position: 'relative'
-      }
-
-    const scrollBodyStyle = {
-          height: scrollBodyHeight,
-          maxHeight: scrollBodyHeight,
-          overflowY: 'hidden',
-          overflowX: 'auto',
-          boxSizing: 'border-box',
-          pointerEvents: 'auto'
-        }
 
     const scrollTop = this.getScrollTop()
 
@@ -49,7 +35,7 @@ class LazyList extends Component {
     >
       <div className="scrollBody"
         ref="scrollBody"
-        style={scrollBodyStyle}
+        style={bodyStyle}
       >
         {
           items
@@ -84,4 +70,4 @@ LazyList.propTypes = {
   renderRow: PropTypes.func
 }
 
-export default LazyList
+export default prepareStyle(LazyList)

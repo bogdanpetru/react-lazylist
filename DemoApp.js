@@ -20,10 +20,12 @@ class DemoApp extends Component {
     return <div>
       <h1>Lazt List</h1>
 
-      <LazyList
-        items={gen(1000)}
-        renderRow={() => <div> bau bau </div>}
-      />
+      <div style={{height: 300}}>
+        <LazyList
+          items={gen(1000)}
+          renderRow={() => <div> bau bau </div>}
+        />
+      </div>
     </div>
   }
 }

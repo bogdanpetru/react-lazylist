@@ -19,22 +19,17 @@ A list that be performant with 10^6 lines rendered, flexible line height, easy c
 
 ### Basics
 
-**key**
-> key: String
+**idProp**
+> idProp?: String
 
-Select what attribute to be used as key. It defaults to `id`, if no `id` attribute on data, it will use render `index`.
-
+Optional. Specify an custom attribute to be used as `id`. This will be used for key by default.
+Also this is required to use `scrollToId` method.
 
 **data**
 > data: Array/Promise(Array)
 
 It is an array or a promise that returns an array of objects containing data to be rendered.
 
-**idProp**
-> idProp?: String
-
-Optional. Specify an custom attribute to be used as `id`. This will be used for key by default.
-Also this is required to use `scrollToId` method.
 
 **initialScrollIndex**
 > initialScrollIndex: Number
