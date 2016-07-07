@@ -9,7 +9,7 @@ const getRowsRangeToRender = ({height, rowHeight, scrollTop, extraRows= 6}) => {
     }
   }
 
-  const renderFrom = Math.ceil(scrollTop / rowHeight - (extraRows / 2))
+  const from = Math.ceil(scrollTop / rowHeight - (extraRows / 2))
   const to = from + noRowsToRender;
 
   const rowsToRender = { from, to }

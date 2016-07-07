@@ -18,8 +18,8 @@ const prepareStyle = (Component) => ({
   const scrollBodyHeight = items.length * rowHeight
 
   const scrollBodyStyle = Object.assign({
-        height: scrollBodyHeight,
-        maxHeight: scrollBodyHeight,
+        height: scrollBodyHeight || 300,
+        maxHeight: scrollBodyHeight || 300,
         overflowY: 'hidden',
         overflowX: 'auto',
         boxSizing: 'border-box',
@@ -27,6 +27,8 @@ const prepareStyle = (Component) => ({
       },
       bodyStyle
     )
+
+    debugger
 
   return <Component
     {...restProps}
@@ -37,5 +39,6 @@ const prepareStyle = (Component) => ({
   />
 }
 
+prepareStyle.displayName = 'StyleLayer'
 
 export default prepareStyle

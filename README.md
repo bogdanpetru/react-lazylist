@@ -19,6 +19,16 @@ A list that be performant with 10^6 lines rendered, flexible line height, easy c
 
 ### Basics
 
+**itemHeight**
+> itemHeight?: Number
+
+It used to calculate how may rows are visible. I it also used to calculate the render buffer.
+
+**minItemHeight**
+> minItemHeight?: Number
+
+It is used to calculate the visible rows and buffer size. It is less performant as **itemHeight*
+
 **idProp**
 > idProp?: String
 
