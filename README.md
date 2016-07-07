@@ -33,6 +33,20 @@ It is an array to be rendered.
 
 ## Style - bem + style
 
+**root**
+
+.react-lazylist
+style
+className
+
+
+**scrollBody**
+.react-lazylist__scroll-body
+scrollBodyStyle
+scrollBodyClassName
+
+
+
 ## Usage
 
 ```js
