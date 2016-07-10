@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import pureRender from './utils/pureRender'
 
 class ScrollBody extends Component {
   constructor(props) {
@@ -20,3 +21,6 @@ class ScrollBody extends Component {
     />;
   }
 }
+
+
+export default pureRender(ScrollBody)

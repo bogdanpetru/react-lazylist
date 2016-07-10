@@ -1,13 +1,13 @@
 const getRangeToRender = ({
-    scrollHeight, 
+    viewportHeight, 
     itemHeight, 
     scrollTop,
     bufferSize = 4
 }) => {
 
-  const noItemsToRender = Math.ceil(scrollHeight / rowHeight) + bufferSize
+  const noItemsToRender = Math.ceil(viewportHeight / itemHeight) + bufferSize
   
-  const itemsBeforeScrollTop = parseInt(scrollTop / rowHeight, 10);
+  const itemsBeforeScrollTop = parseInt(scrollTop / itemHeight, 10);
   /**
    * buffer is spread before and after the visible area
    * e.g if the buffer is 4, two extra items will be rendered
@@ -21,7 +21,7 @@ const getRangeToRender = ({
   }
 
   const to = from + noItemsToRender;
-
+  
   return { from, to }
 }
 

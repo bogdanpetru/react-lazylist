@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import pureRender from './utils/pureRender'
 
 class ListItem extends Component {
   render() {
     const {
-      rowHeight,
-      renderRow,
+      itemHeight,
+      renderItem,
       translateY
     } = this.props
 
@@ -13,13 +14,13 @@ class ListItem extends Component {
     return <div
       style={{
         transform: `translateY(${translateY}px)`,
-        height: rowHeight
+        height: itemHeight
       }}
     >
-      {renderRow()}
+      {renderItem(this.props)}
     </div>
   }
 }
 
 
-export default ListItem
+export default pureRender(ListItem)
