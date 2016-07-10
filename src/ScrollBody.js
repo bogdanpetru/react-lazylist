@@ -17,6 +17,6 @@ class ScrollBody extends Component {
     return <div
       {...restProps}
       onScroll={this.onScroll}
-    >;
+    />;
   }
 }
