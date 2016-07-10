@@ -5,11 +5,10 @@ class ListItem extends Component {
     const {
       rowHeight,
       renderRow,
-      realIndex,
-      index
+      translateY
     } = this.props
 
-    const translateY = (realIndex * rowHeight) - ((index + 1) * rowHeight)
+    
 
     return <div
       style={{
