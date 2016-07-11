@@ -10,6 +10,7 @@ A list that be performant with 10^6 lines rendered, flexible line height, easy c
 ## TODO MVP:
 - [x] write mvp documentation
 - [x] implement documentation
+- [ ] refactor, create examples folder
 - [ ] write tests
 - [ ] use flow
 - [x] virtual render
