@@ -3,14 +3,22 @@ import ListItem from './ListItem'
 import ScrollBody from './ScrollBody'
 import rangeToRender from './utils/rangeToRender'
 import pureRender from './utils/pureRender'
+import assign from './utils/assign'
+import getBufferLimits from './utils/getBufferLimits'
 
+/**
+ * It is responsable for rendering list items
+ * TODO:
+ * - extract scroll logic into a HOC
+ * - extract data manipulateion into a HOC
+ */
 class LazyList extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { 
+    this.state = {
         scrollTop: props.defaultScrollTop,
-        lazylistHeight: 0 
+        lazylistHeight: 0
       }
 
     this.onScroll = this.onScroll.bind(this)
@@ -22,9 +30,8 @@ class LazyList extends Component {
     if (node) {
       const newState = { lazylistHeight: node.offsetHeight }
       this.setState(newState)
-      // TODO: refactor
-      // doing this cause getFromTO needs lazyListHeight
-      this.setState(this.getFromTo())
+
+      this.refreshScrollState(this.props.scrollTop || 0)
     }
   }
 
@@ -46,12 +53,12 @@ class LazyList extends Component {
     } = this.state
 
 
-    const style = Object.assign({}, this.props.style, {
+    const style = assign({}, this.props.style, {
       overflow: 'auto'
     })
 
     const scrollHeight = data.length * itemHeight;
-    const scrollBodyStyle = Object.assign({}, this.props.scrollBodyStyle, {
+    const scrollBodyStyle = assign({}, this.props.scrollBodyStyle, {
       height: scrollHeight
     })
 
@@ -96,7 +103,6 @@ class LazyList extends Component {
   }
 
   getFromTo(scrollTo) {
-
    const {
       itemHeight,
       bufferSize
@@ -117,33 +123,31 @@ class LazyList extends Component {
       bufferStart,
       bufferEnd
     } = this.state
- 
 
-    if (!bufferStart || !bufferEnd) 
-     // determine the buffern limits
-   
     // we have to determine if the buffer is consumed
     if (scrollTop >= bufferEnd || scrollTop <= bufferStart) {
-      const newState = assing(
-        { scrollTop }, 
-       this.getFromTo(scrollTo)
-      )
-
-      this.setState(newState)
+      this.refreshScrollState(scrollTop);
     }
   }
 
-  getBufferLimits({ from, to, itemHeight }) {
-    const bufferHeight = (to - from) * itemHeight
-    const bufferStart = from *  itemHeight
-    const bufferEnd = bufferStart + bufferHeight
+  refreshScrollState(scrollTop) {
+    const {
+      from,
+      to
+    } = this.getFromTo(scrollTop);
 
-    return {
+    const {
       start: bufferStart,
       end: bufferEnd
-    }
-  }
+    } = this.getBufferLimits({ from, to, itemHeihgt: this.props.itemHeight})
 
+    this.setState({
+      from,
+      to,
+      bufferStart,
+      bufferEnd
+    })
+  }
 }
 
 LazyList.defaultProps = {
