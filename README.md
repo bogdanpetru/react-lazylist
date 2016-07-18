@@ -2,15 +2,15 @@
 
 Awesome react list, lazy renders only the visible rows.
 
-## The component is not production ready, working on mvp.
+## This component can be used, it has basic virtial rendering.
 
 ## Goal
 A list that be performant with 10^6 lines rendered, flexible line height, easy customizable (themes and render hooks). Supports `tabs` as iPhone contact list.
 
 ## TODO MVP:
 - [x] write mvp documentation
-- [ ] implement documentation
-- [ ] implement buffer, and buffer items in direction of scroll
+- [x] implement buffer
+- [ ] buffer items in direction of scroll
 - [ ] refactor, create examples folder
 - [ ] write tests
 - [ ] use flow
@@ -22,31 +22,22 @@ A list that be performant with 10^6 lines rendered, flexible line height, easy c
 ### Basics
 
 **itemHeight**
-> itemHeight?: Number
+> itemHeight: Number
 
 It used to calculate how may rows are visible. I it also used to calculate the render buffer.
+For now the list can render only fixed height rows.
 
 **data**
-> data: Array/Promise(Array)
+> data: Array(Array)
 
 It is an array to be rendered.
 
+### Render
 
+**renderItem**
+> renderItem(dataItem: Object) -> JSX/String
 
-## Style - bem + style
-
-**root**
-
-.react-lazylist
-style
-className
-
-
-**scrollBody**
-.react-lazylist__scroll-body
-scrollBodyStyle
-scrollBodyClassName
-
+Custom renderer for listitem.
 
 
 ## Usage
@@ -61,7 +52,7 @@ scrollBodyClassName
     ..
   ]
 
-  const renderItem = ({ name }) => <div>{name}</div>
+  const renderItem = ({ name /* you have access to data item */}) => <div>{name}</div>
 
   <LazyList
     data={data}
@@ -77,7 +68,7 @@ git clone https://github.com/bogdanpetru/react-lazylist.git
 cd react-lazylist
 npm install
 npm start
-open http://localhost:3000
+open http://localhost:3002
 ```
 
 ## License

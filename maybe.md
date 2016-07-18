@@ -75,3 +75,15 @@ const data = [
 > scrollToId(id: String/Number) => void
 
 Scroll to id specified by `idProp`, it defaults to `id` key in data. To use this method it is required to have a unique `id` key on data, or a custom `idProp` set.
+
+**root**
+
+.react-lazylist
+style
+className
+
+
+**scrollBody**
+.react-lazylist__scroll-body
+scrollBodyStyle
+scrollBodyClassName
