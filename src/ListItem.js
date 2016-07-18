@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import pureRender from './utils/pureRender'
 
 class ListItem extends Component {
@@ -8,8 +8,6 @@ class ListItem extends Component {
       renderItem,
       translateY
     } = this.props
-
-    
 
     return <div
       style={{
@@ -22,5 +20,14 @@ class ListItem extends Component {
   }
 }
 
+ListItem.defaultProps = {
+  renderItem: () => {}
+}
+
+ListItem.propTypes = {
+  renderItem: PropTypes.func,
+  itemHeight: PropTypes.number,
+  translateY: PropTypes.number
+}
 
 export default pureRender(ListItem)
