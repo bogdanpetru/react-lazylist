@@ -24,7 +24,7 @@ class DemoApp extends Component {
         <LazyList
           itemHeight={40}
           style={{height: 300}}
-          data={gen(1000)}
+          data={gen(50)}
           renderItem={() => <div> bau bau </div>}
         />
       </div>

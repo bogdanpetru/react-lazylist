@@ -4,7 +4,7 @@ import ScrollBody from './ScrollBody'
 import rangeToRender from './utils/rangeToRender'
 import pureRender from './utils/pureRender'
 import assign from './utils/assign'
-import getBufferLimits from './utils/getBufferLimits'
+import getBufferLimits from './utils/getBufferLimits.js'
 
 /**
  * It is responsable for rendering list items
@@ -28,10 +28,15 @@ class LazyList extends Component {
     const node = this.refs.lazylist
 
     if (node) {
-      const newState = { lazylistHeight: node.offsetHeight }
+      const listHeight = node.offsetHeight;
+      const newState = { lazylistHeight: listHeight }
       this.setState(newState)
 
-      this.refreshScrollState(this.props.scrollTop || 0)
+
+      this.refreshScrollState(
+        this.props.scrollTop,
+        listHeight
+      )
     }
   }
 
@@ -39,6 +44,7 @@ class LazyList extends Component {
     const {
       data,
       renderItem,
+      itemHeight,
 
       // style
       className,
@@ -66,12 +72,11 @@ class LazyList extends Component {
       className={`react-lazylist ${className}`}
       style={style}
       ref="lazylist"
-      onScroll={(event) => this.setState({ scrollTop: event.target.scrollTop })}
+      onScroll={this.onScroll}
     >
       <ScrollBody
         style={scrollBodyStyle}
         className={scrollBodyClassName}
-        onScroll={this.onScroll}
       >
       {
         data
@@ -83,10 +88,14 @@ class LazyList extends Component {
              */
             const key = `row-item-${index}`
 
-            // because items are positioned with
-            // translate and they have position
-            // have to take into account their inital position
-            const translateCorrection = (index + 1) * itemHeight
+            /**
+             * Items are positioned using translate
+             * becuase they have position, we have to add a correction
+             * so their position is correct.
+             * realIndex * itemHeight will give the correct position
+             * if all the rows start at 0, have position absolute.
+             */
+            const translateCorrection = ((index + 1) * itemHeight) - itemHeight
             const translateY = (realIndex * itemHeight) - translateCorrection
 
             return <ListItem
@@ -102,14 +111,14 @@ class LazyList extends Component {
     </div>
   }
 
-  getFromTo(scrollTo) {
+  getFromTo(scrollTo, listHeight) {
    const {
       itemHeight,
       bufferSize
-    } = props
+    } = this.props
 
     const fromTo = rangeToRender({
-      viewportHeight: this.state.lazylistHeight,
+      viewportHeight: listHeight || this.state.lazylistHeight,
       itemHeight,
       scrollTop: scrollTo || this.state.scrollTop,
       bufferSize
@@ -118,28 +127,33 @@ class LazyList extends Component {
     return fromTo
   }
 
-  onScroll(scrollTop) {
+  onScroll(event) {
+    const scrollTop = event.target.scrollTop
     const {
       bufferStart,
       bufferEnd
     } = this.state
 
     // we have to determine if the buffer is consumed
-    if (scrollTop >= bufferEnd || scrollTop <= bufferStart) {
+    if (scrollTop + this.state.lazylistHeight >= bufferEnd || scrollTop <= bufferStart) {
       this.refreshScrollState(scrollTop);
     }
   }
 
-  refreshScrollState(scrollTop) {
+  refreshScrollState(scrollTop, listHeight) {
     const {
       from,
       to
-    } = this.getFromTo(scrollTop);
+    } = this.getFromTo(scrollTop, listHeight);
 
     const {
       start: bufferStart,
       end: bufferEnd
-    } = this.getBufferLimits({ from, to, itemHeihgt: this.props.itemHeight})
+    } = getBufferLimits({
+      from,
+      to,
+      itemHeight: this.props.itemHeight,
+    })
 
     this.setState({
       from,
