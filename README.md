@@ -10,6 +10,7 @@ A list that be performant with 10^6 lines rendered, flexible line height, easy c
 ## TODO MVP:
 - [x] write mvp documentation
 - [x] implement buffer
+- [ ] update buffer only when it's limits are exceeded
 - [ ] buffer items in direction of scroll
 - [ ] refactor, create examples folder
 - [ ] write tests
