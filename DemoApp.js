@@ -22,7 +22,7 @@ class DemoApp extends Component {
 
       <div style={{height: 300}}>
         <LazyList
-          itemHeight={40}
+          minItemHeight={40}
           style={{height: 300}}
           data={gen(10000)}
           renderItem={() => <div> bau bau </div>}

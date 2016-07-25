@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import ListItem from './ListItem'
 import ScrollBody from './ScrollBody'
-import rangeToRender from './utils/rangeToRender'
 import pureRender from './utils/pureRender'
 import assign from './utils/assign'
+import rangeToRender, { getRelativeRangeToRender } from './utils/rangeToRender'
 import getBufferLimits from './utils/getBufferLimits.js'
 
 /**
@@ -19,7 +19,7 @@ class LazyList extends Component {
     this.state = {
         scrollTop: props.defaultScrollTop,
         lazylistHeight: 0
-      }
+    }
 
     this.onScroll = this.onScroll.bind(this)
   }
@@ -34,7 +34,7 @@ class LazyList extends Component {
 
 
       this.refreshScrollState(
-        this.props.scrollTop,
+        this.props.scrollTop || 0,
         listHeight
       )
     }
@@ -44,6 +44,7 @@ class LazyList extends Component {
     const {
       data,
       itemHeight,
+      minItemHeight,
 
       // style
       className,
@@ -62,7 +63,7 @@ class LazyList extends Component {
       overflow: 'auto'
     })
 
-    const scrollHeight = data.length * itemHeight;
+    const scrollHeight = this.scrollHeight = data.length * (itemHeight || minItemHeight);
     const scrollBodyStyle = assign({}, this.props.scrollBodyStyle, {
       height: scrollHeight
     })
@@ -98,11 +99,12 @@ class LazyList extends Component {
              * if all the rows start at 0, have position absolute.
              */
             const translateCorrection = ((index + 1) * itemHeight) - itemHeight
-            const translateY = (realIndex * itemHeight) - translateCorrection
+            const translateY = (realIndex * (itemHeight || minItemHeight)) - translateCorrection
 
             return <ListItem
               {...item}
-              itemHeight={itemHeight}
+              height={itemHeight}
+              minHeight={minItemHeight}
               renderItem={renderItem}
               key={key}
               translateY={translateY}
@@ -111,22 +113,6 @@ class LazyList extends Component {
       }
       </ScrollBody>
     </div>
-  }
-
-  getFromTo(scrollTo, listHeight) {
-   const {
-      itemHeight,
-      bufferSize
-    } = this.props
-
-    const fromTo = rangeToRender({
-      viewportHeight: listHeight || this.state.lazylistHeight,
-      itemHeight,
-      scrollTop: scrollTo || this.state.scrollTop,
-      bufferSize,
-    })
-
-    return fromTo
   }
 
   onScroll(event) {
@@ -142,19 +128,46 @@ class LazyList extends Component {
     }
   }
 
-  refreshScrollState(scrollTop, listHeight) {
+  getFromTo(scrollTop = 0, listHeight) {
+   const {
+      itemHeight,
+      bufferSize
+    } = this.props
+
+    const fromToFunction = itemHeight ? rangeToRender : getRelativeRangeToRender
+
+    /**
+     * TODO bogdan: add documentation + refactor
+     */
+    const fromTo = fromToFunction({
+      viewportHeight: listHeight || this.state.lazylistHeight,
+      itemHeight: itemHeight || this.props.minItemHeight,
+      scrollTop,
+      bufferSize,
+      scrollHeight: this.scrollHeight, // needed if from to is relative and not fixed - see docs
+      itemsLength: this.props.data.length,
+    })
+
+
+    return fromTo
+  }
+
+
+  refreshScrollState(scrollTop = 0, listHeight) {
     const {
       from,
-      to
-    } = this.getFromTo(scrollTop, listHeight);
+      to,
+    } = this.getFromTo(scrollTop, listHeight)
+
+    const itemHeight = this.props.itemHeight || this.props.minItemHeight
 
     const {
       start: bufferStart,
-      end: bufferEnd
+      end: bufferEnd,
     } = getBufferLimits({
       from,
       to,
-      itemHeight: this.props.itemHeight,
+      itemHeight,
     })
 
     this.setState({
@@ -167,7 +180,8 @@ class LazyList extends Component {
 }
 
 LazyList.defaultProps = {
-  itemHeight: 40,
+  itemHeight: null,
+  minItemHeight: 40,
   bufferSize: 4,
   defaultScrollTop: 0,
 }
@@ -176,7 +190,9 @@ LazyList.propTypes = {
   renderItem: PropTypes.func,
   // chidren can be a custom render for lisitem
   children: PropTypes.func,
+  data: PropTypes.array,
   itemHeight: PropTypes.number,
+  minItemHeight: PropTypes.number,
   defaultScrollTop: PropTypes.number,
   className: PropTypes.string,
   scrollBodyClassName: PropTypes.string,

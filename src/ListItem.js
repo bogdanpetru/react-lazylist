@@ -4,16 +4,26 @@ import pureRender from './utils/pureRender'
 class ListItem extends Component {
   render() {
     const {
-      itemHeight,
+      height,
+      minHeight,
       renderItem,
-      translateY
+      translateY,
     } = this.props
 
+    let style = {
+      transform: `translateY(${translateY}px)`,
+    }
+
+    if (height) {
+      style.height = height
+    }
+
+    if (minHeight) {
+      style.minHeight = minHeight
+    }
+
     return <div
-      style={{
-        transform: `translateY(${translateY}px)`,
-        height: itemHeight
-      }}
+      style={style}
     >
       {renderItem(this.props)}
     </div>
@@ -26,8 +36,9 @@ ListItem.defaultProps = {
 
 ListItem.propTypes = {
   renderItem: PropTypes.func,
-  itemHeight: PropTypes.number,
-  translateY: PropTypes.number
+  height: PropTypes.number,
+  minHeight: PropTypes.number,
+  translateY: PropTypes.number,
 }
 
 export default pureRender(ListItem)
