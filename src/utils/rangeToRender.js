@@ -25,5 +25,7 @@ const getRangeToRender = ({
   return { from, to }
 }
 
+const getRelativeRangeToRender = ({}) => {}
+
 
 export default getRangeToRender

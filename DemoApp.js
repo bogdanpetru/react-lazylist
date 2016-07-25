@@ -27,6 +27,7 @@ class DemoApp extends Component {
           data={gen(10000)}
           renderItem={() => <div> bau bau </div>}
         />
+        {({ name }) => <div> bau bau from { name } </div>}
       </div>
     </div>
   }

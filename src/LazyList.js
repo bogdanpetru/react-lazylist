@@ -43,7 +43,6 @@ class LazyList extends Component {
   render () {
     const {
       data,
-      renderItem,
       itemHeight,
 
       // style
@@ -67,6 +66,9 @@ class LazyList extends Component {
     const scrollBodyStyle = assign({}, this.props.scrollBodyStyle, {
       height: scrollHeight
     })
+
+    const renderItem = typeof this.props.children === 'function' ?
+            this.props.children : this.props.renderItem
 
     return <div
       className={`react-lazylist ${className}`}
@@ -121,7 +123,7 @@ class LazyList extends Component {
       viewportHeight: listHeight || this.state.lazylistHeight,
       itemHeight,
       scrollTop: scrollTo || this.state.scrollTop,
-      bufferSize
+      bufferSize,
     })
 
     return fromTo
@@ -131,7 +133,7 @@ class LazyList extends Component {
     const scrollTop = event.target.scrollTop
     const {
       bufferStart,
-      bufferEnd
+      bufferEnd,
     } = this.state
 
     // we have to determine if the buffer is consumed
@@ -159,7 +161,7 @@ class LazyList extends Component {
       from,
       to,
       bufferStart,
-      bufferEnd
+      bufferEnd,
     })
   }
 }
@@ -167,13 +169,17 @@ class LazyList extends Component {
 LazyList.defaultProps = {
   itemHeight: 40,
   bufferSize: 4,
-  defaultScrollTop: 0
+  defaultScrollTop: 0,
 }
 
 LazyList.propTypes = {
-  renderItem: PropTypes.func.isRequired,
+  renderItem: PropTypes.func,
+  // chidren can be a custom render for lisitem
+  children: PropTypes.func,
   itemHeight: PropTypes.number,
-  defaultScrollTop: PropTypes.number
+  defaultScrollTop: PropTypes.number,
+  className: PropTypes.string,
+  scrollBodyClassName: PropTypes.string,
 }
 
 export default pureRender(LazyList)
