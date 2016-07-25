@@ -11,6 +11,7 @@ A list that be performant with 10^6 lines rendered, flexible line height, easy c
 - [x] write mvp documentation
 - [x] implement buffer
 - [x] update buffer only when it's limits are exceeded
+- [ ] implement simple chache item size
 - [ ] buffer items in direction of scroll
 - [ ] refactor, create examples folder
 - [ ] write tests
@@ -29,9 +30,15 @@ It used to calculate how may rows are visible. I it also used to calculate the r
 For now the list can render only fixed height rows.
 
 **data**
-> data: Array(Array)
+> data: Object<Array>
 
 It is an array to be rendered.
+
+**bufferSize**
+> bufferSize: Number
+
+Determine how many extra rows to be rendered. This rows are not visible. They are usefull when scrolling
+so the edges of the renderd items is not seen.
 
 ### Render
 
