@@ -7,10 +7,10 @@ import assign from './utils/assign'
 import getBufferLimits from './utils/getBufferLimits.js'
 
 /**
- * It is responsable for rendering list items
+ * It is responsible for rendering list items
  * TODO:
  * - extract scroll logic into a HOC
- * - extract data manipulateion into a HOC
+ * - extract data manipulation into a HOC
  */
 class LazyList extends Component {
   constructor(props) {
@@ -92,7 +92,7 @@ class LazyList extends Component {
 
             /**
              * Items are positioned using translate
-             * becuase they have position, we have to add a correction
+             * because they have position, we have to add a correction
              * so their position is correct.
              * realIndex * itemHeight will give the correct position
              * if all the rows start at 0, have position absolute.
@@ -174,7 +174,7 @@ LazyList.defaultProps = {
 
 LazyList.propTypes = {
   renderItem: PropTypes.func,
-  // chidren can be a custom render for lisitem
+  // children can be a custom render for lisitem
   children: PropTypes.func,
   itemHeight: PropTypes.number,
   defaultScrollTop: PropTypes.number,
